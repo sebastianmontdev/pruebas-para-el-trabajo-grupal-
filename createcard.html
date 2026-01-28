@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Creador de Tarjetas con Imagen</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; background-color: #e9ecef; padding: 20px; }
+        
+        #card-form { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 30px; width: 300px; }
+        h2 { color: #333; }
+        input { display: block; margin: 12px 0; padding: 10px; width: 100%; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        button { cursor: pointer; background: #28a745; color: white; border: none; padding: 12px; border-radius: 6px; width: 100%; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #218838; }
+
+        #display-area { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; width: 100%; }
+
+        /* Estilo de la Tarjeta */
+        .card { background: white; width: 220px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; padding-bottom: 15px; border: 1px solid #eee; }
+        .card img { width: 100%; height: 150px; object-fit: cover; /* Esto evita que la imagen se deforme */ background-color: #ddd; }
+        .card h3 { margin: 15px 0 5px 0; color: #222; font-size: 1.2em; }
+        .card p { color: #666; font-size: 0.9em; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <h2>Perfil de Usuario</h2>
+    
+    <div id="card-form">
+        <input type="text" id="name" placeholder="Nombre completo">
+        <input type="text" id="role" placeholder="Puesto / Título">
+        <input type="text" id="imgUrl" placeholder="URL de la imagen (https://...)">
+        <button onclick="createCard()">Crear Tarjeta</button>
+    </div>
+
+    <div id="display-area"></div>
+
+    <script>
+        function createCard() {
+            const name = document.getElementById('name').value;
+            const role = document.getElementById('role').value;
+            const imgUrl = document.getElementById('imgUrl').value;
+
+            if (!name || !role || !imgUrl) {
+                alert("Por favor, completa todos los campos, incluyendo la URL de la imagen.");
+                return;
+            }
+
+            const displayArea = document.getElementById('display-area');
+
+            // Crear el contenedor de la tarjeta
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            // Estructura de la tarjeta con la imagen
+            card.innerHTML = `
+                <img src="${imgUrl}" alt="Foto de ${name}" onerror="this.src='https://via.placeholder.com/150?text=Error+Imagen'">
+                <h3>${name}</h3>
+                <p>${role}</p>
+            `;
+
+            displayArea.appendChild(card);
+
+            // Limpiar inputs
+            document.getElementById('name').value = '';
+            document.getElementById('role').value = '';
+            document.getElementById('imgUrl').value = '';
+        }
+    </script>
+
+</body>
+</html>
